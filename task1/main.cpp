@@ -9,6 +9,8 @@ int main() {
 
     double h = 1.0 / (N + 1);
     std::ofstream coords("task1/coords.txt");
+    std::ofstream connectivity("task1/connectivity.txt");
+int e = 0;
 
     std::cout << "Numero totale di nodi interni: " << N * N << std::endl;
     std::cout << "Passo della griglia h: " << h << std::endl;
@@ -24,9 +26,22 @@ for (int i = 1; i <= N; i++) {
               << j << " "
               << x << " "
               << y << std::endl;
+
+if (i < N) {
+    connectivity << e << " " << n << " " << n + 1 << std::endl;
+    e++;
+}
+
+if (j < N) {
+    connectivity << e << " " << n << " " << n + N << std::endl;
+    e++;
+}
+
 }
 }
 coords.close();
+connectivity.close();
 std::cout << "File coords.txt creato." << std::endl;
+std::cout << "File connectivity.txt creato." << std::endl;
     return 0;
 }

@@ -75,6 +75,30 @@ formato:
 Il file delle coordinate viene generato automaticamente dal programma e non
 viene conservato nel repository, perche' puo' essere ricreato eseguendo il
 codice.
+### Generazione del file delle connessioni
+
+Per ogni nodo interno il programma controlla se esistono il vicino a destra e
+il vicino in alto.
+
+Il vicino a destra ha identificatore `n + 1` ed esiste quando `i < N`.
+Il vicino in alto ha identificatore `n + N` ed esiste quando `j < N`.
+
+Vengono considerati soltanto destra e alto per rappresentare ogni arco non
+orientato una sola volta, evitando duplicati.
+
+Gli archi vengono numerati progressivamente mediante il contatore `e`. Per
+ogni arco il programma scrive nel file `task1/connectivity.txt` una riga nel
+formato:
+
+`e n1 n2`
+
+I test eseguiti hanno prodotto:
+- per `N = 1`: 1 nodo e 0 archi;
+- per `N = 2`: 4 nodi e 4 archi;
+- per `N = 3`: 9 nodi e 12 archi.
+
+Il file viene generato automaticamente dal programma e non viene conservato
+nel repository.
 
 ## Questioni ancora aperte
 
