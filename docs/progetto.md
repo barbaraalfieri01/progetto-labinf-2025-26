@@ -50,9 +50,35 @@ poter controllare manualmente i file prodotti. Dopo ogni passo verranno eseguiti
 test semplici e il documento verra' aggiornato per descrivere lo stato effettivo
 del programma.
 
+## Sviluppo della Task 1 - 29 Agosto 2026
+
+### Generazione della griglia e del file delle coordinate
+
+Il programma della Task 1 riceve in input il numero `N` di punti interni per ciascuna direzione. Il passo della griglia e':
+`h = 1 / (N + 1)`.
+
+I punti interni hanno indici `i` e `j` compresi tra `1` e `N`. Le loro
+coordinate sono `x = i * h` e `y = j * h`.
+
+I punti vengono visitati riga per riga mediante due cicli annidati: `j` varia nel ciclo esterno e `i` varia nel ciclo interno.
+
+L'identificatore naturale del nodo viene calcolato con la formula:
+
+`n = (j - 1) * N + (i - 1)`.
+
+Questa formula assegna identificatori progressivi da `0` a `N^2 - 1`.
+Per ogni nodo il programma scrive nel file `task1/coords.txt` una riga nel
+formato:
+
+`n i j x y`
+
+Il file delle coordinate viene generato automaticamente dal programma e non
+viene conservato nel repository, perche' puo' essere ricreato eseguendo il
+codice.
+
 ## Questioni ancora aperte
 
-- formula esatta usata per associare gli indici di griglia agli identificatori;
+
 - scelta del separatore e condizioni di arresto della ricorsione;
 - gestione dell'ordinamento naturale e di quello riordinato;
 - verifica dei segni della matrice e del termine noto;

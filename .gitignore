@@ -1,2 +1,4 @@
 .DS_Store
 build/
+task1/coords.txt
+task1/connectivity.txt
