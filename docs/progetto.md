@@ -100,10 +100,61 @@ I test eseguiti hanno prodotto:
 Il file viene generato automaticamente dal programma e non viene conservato
 nel repository.
 
+## Sviluppo della Task 2 - 5 settembre 2026
+
+### Lettura dei nodi
+
+Il programma legge i nodi dal file `task1/coords.txt`. Ogni nodo viene
+rappresentato mediante la struttura `Nodo`, che contiene:
+
+- l'identificatore originale `n`;
+- gli indici di griglia `i` e `j`;
+- le coordinate geometriche `x` e `y`.
+
+I nodi vengono memorizzati in un `std::vector<Nodo>`.
+
+La strategia di riordinamento è geometrica e utilizza gli indici `i` e `j`.
+Non è quindi necessario leggere esplicitamente `connectivity.txt`: le
+connessioni del grafo derivano dalla griglia regolare costruita nella Task 1.
+
+### Ordinamento nested dissection
+
+L'ordinamento viene costruito dalla funzione ricorsiva
+`nestedDissection`.
+
+A ogni chiamata la funzione:
+
+1. sceglie la direzione del taglio, utilizzando alternativamente `i` e `j`;
+2. determina gli estremi delle coordinate presenti;
+3. sceglie una coordinata centrale come separatore;
+4. divide i nodi nei vettori `V1`, `V2` e `VS`;
+5. applica ricorsivamente lo stesso procedimento a `V1` e `V2`;
+6. aggiunge alla fine i nodi del separatore `VS`.
+
+La ricorsione termina quando l'insieme è vuoto oppure contiene un solo nodo.
+La direzione viene alternata passando da un taglio verticale a uno
+orizzontale e viceversa.
+
+### File di ordinamento
+
+Il risultato viene scritto nel file `task2/ordering.txt` nel formato:
+
+`m n`
+
+dove `m` è il nuovo indice del nodo e `n` è il suo identificatore originale.
+Il file è generato automaticamente e non viene conservato nel repository.
+
+Per `N = 3`, l'ordinamento ricorsivo ottenuto è:
+
+`0 6 3 2 8 5 1 4 7`
+
+Sono stati eseguiti test con `N = 1`, `N = 2`, `N = 3` e `N = 4`.
+In ogni caso il file contiene esattamente `N^2` righe e ogni identificatore
+originale compare una sola volta.
+
 ## Questioni ancora aperte
 
 
-- scelta del separatore e condizioni di arresto della ricorsione;
 - gestione dell'ordinamento naturale e di quello riordinato;
 - verifica dei segni della matrice e del termine noto;
 - dimensioni massime eseguibili sul computer disponibile.
