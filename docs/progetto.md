@@ -195,12 +195,43 @@ conservati nel repository. Una prima verifica con `N = 2` ha prodotto una
 matrice con 4 elementi diagonali e 8 elementi fuori diagonale, corrispondenti
 ai 4 archi del grafo rappresentati in entrambe le direzioni.
 
-## Questioni ancora aperte
+## Sviluppo della Task 4 - 23 settembre 2026
 
-- lettura della matrice e del termine noto nel notebook Python;
-- conversione della matrice sparsa nel formato CSC;
-- fattorizzazione di Cholesky e soluzione del sistema lineare;
-- confronto tra ordinamento naturale e nested dissection;
-- dimensioni massime eseguibili sul computer disponibile.
+### Lettura dei file e costruzione della matrice sparsa
 
-Queste questioni verranno risolte e documentate progressivamente.
+La Task 4 viene sviluppata nel notebook Python `task4/task4.ipynb`. Il
+notebook legge `task3/A.txt` e `task3/rhs.txt` mediante `numpy.loadtxt`.
+
+Le tre colonne di `A.txt` vengono separate in:
+
+- indici di riga, convertiti in interi;
+- indici di colonna, convertiti in interi;
+- valori della matrice, mantenuti come numeri decimali.
+
+Questi tre vettori vengono utilizzati per costruire direttamente la matrice
+sparsa `A` in formato CSC. La dimensione della matrice viene ricavata dal
+numero di elementi del vettore `rhs`.
+
+### Fattorizzazione e soluzione
+
+Per utilizzare CHOLMOD e' stato creato l'ambiente Conda `progetto-labinf`,
+contenente Python 3.11, NumPy, SciPy, Matplotlib, scikit-sparse e ipykernel.
+
+Poiche' `A` e' definita negativa, il notebook fattorizza la matrice `-A`:
+
+`-A = L * L^T`
+
+La funzione `calcola_L` richiama la fattorizzazione di
+`sksparse.cholmod` con ordinamento interno naturale e restituisce la matrice
+triangolare inferiore `L`. Nella versione installata della libreria vengono
+utilizzati il parametro `ordering_method="natural"` e il metodo `factor.L()`.
+
+Il sistema originale `A * u = rhs` viene trasformato in
+`(-A) * u = -rhs` e risolto in due passaggi con
+`scipy.sparse.linalg.spsolve_triangular`:
+
+1. soluzione di `L * y = -rhs`;
+2. soluzione di `L^T * u = y`.
+
+
+
