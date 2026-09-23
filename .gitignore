@@ -3,3 +3,5 @@ build/
 task1/coords.txt
 task1/connectivity.txt
 task2/ordering.txt
+task3/A.txt
+task3/rhs.txt

@@ -152,11 +152,55 @@ Sono stati eseguiti test con `N = 1`, `N = 2`, `N = 3` e `N = 4`.
 In ogni caso il file contiene esattamente `N^2` righe e ogni identificatore
 originale compare una sola volta.
 
+## Sviluppo della Task 3 - 23 settembre 2026
+
+### Lettura dei dati e scelta dell'ordinamento
+
+Il programma legge i nodi da `task1/coords.txt` e ricostruisce `N` cercando il
+massimo valore degli indici di griglia `i` e `j`. Calcola quindi il passo
+`h = 1 / (N + 1)` e il coefficiente `kappa / h^2`, con `kappa = 0.01`.
+
+L'utente puo' scegliere tra due ordinamenti:
+
+- nell'ordinamento naturale, il nuovo indice coincide con l'identificatore
+  originale del nodo;
+- nell'ordinamento riordinato, il programma legge le associazioni `m n` dal
+  file `task2/ordering.txt`.
+
+Il vettore `nuovoIndice` permette di passare dall'identificatore originale di
+un nodo al suo indice nel sistema lineare.
+
+### Costruzione della matrice e del termine noto
+
+La matrice viene esportata in `task3/A.txt`. Ogni riga contiene:
+
+`i j A[i,j]`
+
+Per ciascun nodo viene scritto l'elemento diagonale
+`-4 * kappa / h^2`. Il programma legge poi gli archi da
+`task1/connectivity.txt`: ogni arco non orientato genera due elementi
+simmetrici della matrice, entrambi uguali a `kappa / h^2`.
+
+Il termine noto viene esportato in `task3/rhs.txt`. Per ogni nodo viene
+calcolata la sorgente
+
+`f(x,y) = exp(-10 * (x^2 + y^2))`
+
+e viene salvato il valore `-f(x,y)`, coerentemente con il sistema
+`A * u = -f`. I contributi del bordo sono nulli perche' la condizione assegnata
+e' `u0 = 0`.
+
+I file `A.txt` e `rhs.txt` vengono generati automaticamente e non sono
+conservati nel repository. Una prima verifica con `N = 2` ha prodotto una
+matrice con 4 elementi diagonali e 8 elementi fuori diagonale, corrispondenti
+ai 4 archi del grafo rappresentati in entrambe le direzioni.
+
 ## Questioni ancora aperte
 
-
-- gestione dell'ordinamento naturale e di quello riordinato;
-- verifica dei segni della matrice e del termine noto;
+- lettura della matrice e del termine noto nel notebook Python;
+- conversione della matrice sparsa nel formato CSC;
+- fattorizzazione di Cholesky e soluzione del sistema lineare;
+- confronto tra ordinamento naturale e nested dissection;
 - dimensioni massime eseguibili sul computer disponibile.
 
 Queste questioni verranno risolte e documentate progressivamente.
