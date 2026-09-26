@@ -194,8 +194,8 @@ int main() {
     // 8. Scrittura di rhs.txt nell'ordine delle righe
     // --------------------------------------------------
 
-    for (double valore : rhs) {
-        rhsFile << valore << std::endl;
+    for (double valoreRhs : rhs) {
+        rhsFile << valoreRhs << std::endl;
     }
 
     matriceA.close();
