@@ -55,7 +55,7 @@ int main() {
 
     int N = 0;
 
-    for (const Nodo nodo& : nodi) {
+    for (const Nodo& nodo : nodi) {
         if (nodo.i > N) {
             N = nodo.i;
         }
