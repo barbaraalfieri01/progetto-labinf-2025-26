@@ -2,6 +2,7 @@
 #include <fstream>
 #include <vector>
 
+
 struct Nodo {
     int n;
     int i;
@@ -9,6 +10,10 @@ struct Nodo {
     double x;
     double y;
 };
+
+//--------------------------------
+// FUNZIONE NESTED DISSECTION
+//------------------------------
 
 void nestedDissection(
     const std::vector<Nodo>& insieme,
@@ -26,7 +31,7 @@ void nestedDissection(
 
     int minimo;
     int massimo;
-
+ //inizializza max e min
     if (tagliaLungoX) {
         minimo = insieme[0].i;
         massimo = insieme[0].i;
@@ -34,7 +39,7 @@ void nestedDissection(
         minimo = insieme[0].j;
         massimo = insieme[0].j;
     }
-
+ // scelta del massimo e del minimo
     for (auto nodo : insieme) {
         int coordinata;
 
@@ -52,6 +57,7 @@ void nestedDissection(
             massimo = coordinata;
         }
     }
+    //identifica se si tratta di una colonna ed eventualmente cambia direzione del taglio
 
     if (minimo == massimo) {
         nestedDissection(insieme, !tagliaLungoX, ordine);
@@ -59,7 +65,7 @@ void nestedDissection(
     }
 
     int taglio = (minimo + massimo) / 2;
-
+ //scrittura V1 V2 VS
     std::vector<Nodo> V1;
     std::vector<Nodo> V2;
     std::vector<Nodo> VS;
@@ -91,10 +97,15 @@ void nestedDissection(
 }
 
 int main() {
-    std::ifstream coords("task1/coords.txt");
+
+    //------------------------------
+    //BLOCCO 1 : LETTURA DEI NODI
+    //-----------------------------
+
+    std::ifstream coords("../task1/coords.txt");
 
     if (!coords) {
-        std::cout << "Errore: non riesco ad aprire task1/coords.txt" << std::endl;
+        std::cout << "Errore: non riesco ad aprire ../task1/coords.txt" << std::endl;
         return 1;
     }
 
@@ -105,29 +116,25 @@ int main() {
     while (coords >> nodo.n >> nodo.i >> nodo.j >> nodo.x >> nodo.y) {
         nodi.push_back(nodo);
     }
-
+    //verifica:
     std::cout << "Ho letto " << nodi.size() << " nodi." << std::endl;
-    for (auto nodo : nodi) {
-    std::cout << nodo.n << " "
-              << nodo.i << " "
-              << nodo.j << " "
-              << nodo.x << " "
-              << nodo.y << std::endl;
-}
-int N = 0;
+   
+ //--------------------------------------------------
+ //BLOCCO 2 : PREPARAZIONE E CHIAMATA DELLA FUNZIONE
+ //--------------------------------------------------
 
-for (auto nodo : nodi) {
-    if (nodo.i > N) {
-        N = nodo.i;
-    }
-}
+ std::vector<int> ordine;
+ nestedDissection(nodi, true, ordine); //entra nella funzione
+  
+ //--------------------------------------
+ //BLOCCO 3: ESECUZIONE NESTED DISSECTION
+ //--------------------------------------
 
-std::cout << "N ricostruito dal file: " << N << std::endl;
-std::vector<int> ordine;
 
-nestedDissection(nodi, true, ordine);
-
-std::ofstream ordering("task2/ordering.txt");
+ //--------------------------------------
+ // BLOCCO 4 : CREAZIONE ORDERING.TXT
+ //-----------------------------------
+std::ofstream ordering("ordering.txt");
 
 if (!ordering) {
     std::cout << "Errore nella creazione di ordering.txt" << std::endl;
