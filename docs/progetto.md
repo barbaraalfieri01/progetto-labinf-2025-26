@@ -221,5 +221,16 @@ Il sistema originale `A * u = rhs` viene trasformato in
 1. soluzione di `L * y = -rhs`;
 2. soluzione di `L^T * u = y`.
 
+## Sviluppo della Task 5
+La task 5 richiede di studiare in primo luogo il problema per N = 32, 64,....,1024, per poi confrontarne i tempi e il numero di entrate non-zero in output fra l'ordinamento naturale e quello ottenuto con il riordinamento della nested dissection. A tal fine sono stati presi in analisi nello specifico i casi N = 32, 64 e 512. Inoltre, dai dati raccolti, è stato possibile tarrre le seguenti conclusioni: 
+
+1. All'aumentare di N la Nested Dissection diminuisce il fill-in della matrice L è possibile notare come nel caso di N = 32 abbiamo circa il 50% degli elementi non nulli in meno fino addirittura al 90% nel caso di N = 512. 
+2. Questo permette a sua volta al programma di accelerare la fattorizzazione risultando subito 4 volte più veloce del caso naturale in caso di N=32 fno a 16 volte più veloce nel caso N = 512.
+3. La precisione dell'esperimento non cambia molto fra i due casi e al crescere di N, entrambe le soluzioni sono numericamente accetabili. Questo è in accordo con il fatto che il riordinamento infatti, non cambia il problema matematico ma cambia solo l'ordine delle incognite per rendere la fattorizzazione più efficiente.
+### Plot della soluzione
+Al termine della task sono stati prodotti il plot della soluzioni e delle immagini della struttura della matrice usando la funzione matplotlib.pyplot.spy. 
+Nel grafico della soluzione numerica di u sulla piastra gli assi indicano le coordinate spaziali x e y, mentre il colore indica il valore della soluzione intepretabile come temperatura. Le zone chiare corrispondono a valori maggiori della temperatura mentre le zone più scure a valori minori della stessa. Si può notare inoltre come aumentando N, diminuisce il passo della griglia h = / (N+1), la piastra viene descritta quindi da un numero maggiore di punti. Questo non cambia la forma generale della soluzione ma di fatto la figura appare meno "a quadratini" di fatto questo indic che stiamo approssimando meglio la situazione nel continuo. 
+### Immagini della struttura della matrice 
+Per quanto riguarda il grafico prodotto con spy, ogni punto in esso rappresenta un elemento non nullo della matrice. Con l'ordinamento naturale, la matrice A presenta una struttura a bande dovuta al fatto che ogni nodo e collegato ai suoi  vicini stretti nella griglia. E' possibile notare come essi si dispongano su una diagonale in quanto nel caso di ordinamento naturale nodi geometricamente vicini hanno indici vicini. Nel caso della nested sdissection infatti, non cambia il numero di punti bensì la disposizione. Questo perchè nested dissection non elimina collegamenti dal problema ma si limita a riordinare righe e colonne quindi il numero di zeri in A deve essere uguale in entrambi i casi. La situazione cambia quando si passsa alla fattorizzazione di Cholesky mediante la quale vengono creati nuovi elementi non nulli. Con l'ordinamento naturale L presenta una banda piuttosto piena e il numero di elementi non nulli cresce rapidamente con N. Con la nested dissection viene ridotto il fill-in della matrice L che risulta più sparsa.
 
 
